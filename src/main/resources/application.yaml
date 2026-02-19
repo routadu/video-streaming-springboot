@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: Video Streaming Mono
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/streamapp
+    username: stream
+    password: stream
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+
+  threads:
+    virtual:
+      enabled: true
+
+video:
+  default-local-directory: "./videos"
+  default-local-hls-directory: "./videos-hls"
