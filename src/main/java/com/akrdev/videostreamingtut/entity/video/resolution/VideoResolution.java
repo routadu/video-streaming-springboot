@@ -22,4 +22,9 @@ public enum VideoResolution {
         this.height = height;
         this.bitrate = bitrate;
     }
+
+    @Override
+    public String toString(){
+        return String.valueOf(height);
+    }
 }

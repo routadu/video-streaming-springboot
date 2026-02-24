@@ -2,33 +2,28 @@ package com.akrdev.videostreamingtut.mapper;
 
 import com.akrdev.videostreamingtut.dto.video.VideoDto;
 import com.akrdev.videostreamingtut.entity.video.Video;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.context.annotation.Primary;
+import com.akrdev.videostreamingtut.entity.video.resolution.VideoResolution;
+import com.akrdev.videostreamingtut.entity.video.videofile.VideoFile;
+import org.hibernate.engine.spi.Resolution;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Service
-@Primary
-public class VideoDtoMapper implements Function<Video, VideoDto> {
-
-    private String getSignedUrl(String originalUrl){
-        try{
-            return originalUrl;
-        } catch (Exception e){
-            return originalUrl;
-        }
-    }
-
+public class VideoDtoMapperWithResolution implements Function<Video, VideoDto> {
     @Override
     public VideoDto apply(Video video) {
+        List<Integer> resolutionList = video.getVideos().stream()
+                .map(VideoFile::getResolution)
+                .sorted().toList();
         return VideoDto.builder()
                 .videoId(video.getId())
                 .title(video.getTitle())
                 .description(video.getDescription())
-                .thumbnailUrl(getSignedUrl(video.getThumbnail()))
                 .uploadedOn(video.getUploadTimestamp())
                 .lastUpdatedOn(video.getLastUpdated())
+                .resolutions(resolutionList)
                 .build();
     }
 }

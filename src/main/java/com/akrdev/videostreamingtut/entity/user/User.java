@@ -23,11 +23,14 @@ public class User {
 
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, columnDefinition = "varchar(30) default 'ROLE_USER'")
+    private String role;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)

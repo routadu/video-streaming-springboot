@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
                 .body(dto);
     }
 
-    @ExceptionHandler({VideoNotFoundException.class, VideoFileNotFoundException.class})
+    @ExceptionHandler({VideoNotFoundException.class, VideoFileNotFoundException.class, UserNotFoundException.class})
     public ResponseEntity<ErrorResponseDto> handleNotFoundException(RuntimeException ex) {
         ErrorResponseDto dto = ErrorResponseDto.builder()
                 .error(ex.getMessage())
@@ -43,6 +43,15 @@ public class GlobalExceptionHandler {
                 .error(ex.getMessage())
                 .build();
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(dto);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponseDto> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        ErrorResponseDto dto = ErrorResponseDto.builder()
+                .error(ex.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(dto);
     }
 }

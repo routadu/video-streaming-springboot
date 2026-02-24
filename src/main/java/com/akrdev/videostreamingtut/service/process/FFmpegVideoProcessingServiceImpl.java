@@ -7,6 +7,7 @@ import com.akrdev.videostreamingtut.entity.video.videofile.VideoFile;
 import com.akrdev.videostreamingtut.entity.video.videofile.processingstatus.ProcessingStatus;
 import com.akrdev.videostreamingtut.service.video.VideoService;
 import com.akrdev.videostreamingtut.service.videofile.VideoFileService;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -36,12 +38,86 @@ public class FFmpegVideoProcessingServiceImpl implements VideoProcessingService 
     @Autowired
     private VideoFileService videoFileService;
 
+    @Value("${thumbnail.default-local-directory}")
+    private String thumbnailLocalDirectory;
+
     @Value("${video.default-local-directory}")
     private String defaultLocalDirectory;
 
     @Value("${video.default-local-hls-directory}")
     private String defaultLocalHlsDirectory;
 
+    @PostConstruct
+    public void init() {
+        try{
+            Path videoHlsPathObj = Path.of(defaultLocalHlsDirectory);
+            Path thumbnailPathObj = Path.of(thumbnailLocalDirectory);
+
+            if(Files.notExists(videoHlsPathObj)){
+                log.info("Creating hls directory: {}",  defaultLocalHlsDirectory);
+                Files.createDirectories(videoHlsPathObj);
+            }
+            if(Files.notExists(thumbnailPathObj)){
+                log.info("Creating thumbnail directory: {}",  thumbnailLocalDirectory);
+                Files.createDirectories(thumbnailPathObj);
+            }
+        } catch (IOException e){
+            log.error("Error while creating directory", e);
+        }
+    }
+
+    public void generateThumbnail(UploadedVideoDto uploadedVideo){
+        log.info("Generating thumbnail for video: {}", uploadedVideo.getVideoId());
+        try{
+            Path thumbnailVideoPath = Paths.get(thumbnailLocalDirectory, uploadedVideo.getVideoId().toString());
+            if(Files.notExists(thumbnailVideoPath)){
+                Files.createDirectories(thumbnailVideoPath);
+            }
+            Path videoFullPath = uploadedVideo.getVideoPath();
+            Path thumbnailFullPath = thumbnailVideoPath.resolve("thumbnail.jpg");
+
+            if(Files.exists(thumbnailFullPath)){
+                log.info("Thumbnail already exists for video: {}", uploadedVideo.getVideoId());
+                return;
+            }
+
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "ffmpeg",
+                    "-ss", "00:00:02",                  // FAST seek (placed before -i)
+                    "-i", videoFullPath.toString(), // Input file
+                    "-frames:v", "1",                   // Extract exactly 1 video frame
+                    "-c:v", "mjpeg",                    // Force the JPEG encoder
+                    "-pix_fmt", "yuvj420p",             // CRITICAL: Force standard JPEG color space
+                    "-q:v", "2",                        // High quality
+                    "-y",                               // Overwrite if exists
+                    thumbnailFullPath.toString()            // Output file
+            );
+
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+
+            long pid = process.pid();
+            log.info("process: {} started", pid);
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    log.info("[FFmpeg - thumbnailGenerator] {}", line);
+                }
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                log.error("Failed to generate thumbnail for video: {}", uploadedVideo.getVideoId());
+            } else {
+                log.info("Thumbnail generated successfully for video: {}", uploadedVideo.getVideoId());
+            }
+        } catch (InterruptedException e){
+            log.error("Failed to generate thumbnail for video: {}", uploadedVideo.getVideoId(), e);
+        } catch (IOException e){
+            log.error("Error while uploading thumbnail", e);
+        }
+    }
 
     public void processVideo(UploadedVideoDto uploadedVideo) {
         log.info("Processing video: {}", uploadedVideo.getVideoId());
@@ -76,6 +152,14 @@ public class FFmpegVideoProcessingServiceImpl implements VideoProcessingService 
 
                 // 4. Create parallel tasks for each resolution
                 List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+                // 5. Generate thumbnail if not provided
+                CompletableFuture<Void> thumbnailFuture = CompletableFuture.runAsync(
+                        () -> generateThumbnail(uploadedVideo),
+                        virtualThreadExecutor
+                );
+                futures.add(thumbnailFuture);
+
                 for (VideoResolution resolution : targetResolutions) {
                     CompletableFuture<Void> future = CompletableFuture.runAsync(
                             () -> transcodeResolution(uploadedVideo, resolution),
@@ -84,7 +168,7 @@ public class FFmpegVideoProcessingServiceImpl implements VideoProcessingService 
                     futures.add(future);
                 }
 
-                // 5. Wait for ALL parallel processes to finish
+                // 6. Wait for ALL parallel processes to finish
                 CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
                 log.info("video: {} processed successfully", uploadedVideo.getVideoId());
@@ -163,7 +247,6 @@ public class FFmpegVideoProcessingServiceImpl implements VideoProcessingService 
                     }
                 }
 
-                processBuilder.inheritIO();
                 int exitCode = process.waitFor();
                 if (exitCode != 0) {
                     throw new RuntimeException("FFmpeg failed for resolution: " + resolution.getName());

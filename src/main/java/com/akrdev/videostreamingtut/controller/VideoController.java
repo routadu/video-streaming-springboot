@@ -3,24 +3,31 @@ package com.akrdev.videostreamingtut.controller;
 import com.akrdev.videostreamingtut.dto.video.VideoDto;
 import com.akrdev.videostreamingtut.dto.video.VideoListDto;
 import com.akrdev.videostreamingtut.dto.video.VideoUploadRequest;
+import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
 import com.akrdev.videostreamingtut.service.video.VideoService;
 import com.akrdev.videostreamingtut.service.upload.VideoUploadService;
 import com.akrdev.videostreamingtut.service.videofile.VideoFileService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/v1/videos")
 @CrossOrigin("*")
 @RequiredArgsConstructor
+@Slf4j
 public class VideoController {
 
     private final VideoService  videoService;
@@ -29,11 +36,13 @@ public class VideoController {
 
     @PostMapping
     public ResponseEntity<VideoDto> uploadVideo(
-            @RequestParam String title,
-            @RequestParam String description,
-            @RequestParam(defaultValue = "application/octet-stream") String contentType,
-            @RequestParam MultipartFile file
-    ) {
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam(name = "contentType", defaultValue = "application/octet-stream") String contentType,
+            @RequestPart(value = "file")  MultipartFile file,
+            @RequestPart(value = "thumbnail", required = false)  MultipartFile thumbnail,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+            ) {
         VideoUploadRequest videoUploadRequest = VideoUploadRequest.builder()
                 .title(title)
                 .description(description)
@@ -42,7 +51,8 @@ public class VideoController {
         VideoDto response = videoUploadService.uploadVideo(
                 videoUploadRequest,
                 file,
-                1L //TODO: Implement user authentication and provide actual userId based on authentication token
+                thumbnail,
+                userDetails.getId()
         );
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -54,12 +64,39 @@ public class VideoController {
         return ResponseEntity.ok(videoService.findAllVideos());
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<VideoListDto> searchVideos(@RequestParam String query){
+        return ResponseEntity.ok()
+                .body(videoService.findAllByQuery(query));
+    }
+
+    @GetMapping("/recommend")
+    public ResponseEntity<VideoListDto> getRecommendVideos(){
+        return ResponseEntity.ok(videoService.findAllVideos());
+    }
+
+    @GetMapping("/{videoId}")
+    public ResponseEntity<Map<String,VideoDto>> getVideoById(@PathVariable UUID videoId){
+        VideoDto video = videoService.findDtoByIdOrThrow(videoId);
+        Map<String,VideoDto> response = Map.of("video", video);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{videoId}/master.m3u8")
     public ResponseEntity<Resource> serveMasterPlaylist(@PathVariable UUID videoId) {
         Resource resource = videoService.getMasterFile(videoId);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("application/vnd.apple.mpegurl"))
+                .body(resource);
+    }
+
+    @GetMapping("/{videoId}/thumbnail")
+    public ResponseEntity<Resource> serveThumbnail(@PathVariable UUID videoId) {
+        Resource resource = videoService.getThumbnailFile(videoId);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .cacheControl(CacheControl.maxAge(7, TimeUnit.HOURS))
                 .body(resource);
     }
 

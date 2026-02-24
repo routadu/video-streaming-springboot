@@ -9,9 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,6 +34,8 @@ public class Video {
 
     private Integer duration;
 
+    private String thumbnail;
+
     @CreationTimestamp
     private LocalDateTime uploadTimestamp;
 
@@ -50,14 +50,6 @@ public class Video {
     @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VideoFile> videos;
 
-    public Path getVideoBasePath(){
-        return Path.of(id.toString());
-    }
-
-    public Path getMasterFilePath(){
-        return getVideoBasePath().resolve("master.m3u8");
-    }
-
     public void addVideoFile(VideoFile file) {
         videos.add(file);
         file.setVideo(this);
@@ -66,5 +58,13 @@ public class Video {
     public void removeVideoFile(VideoFile file) {
         videos.remove(file);
         file.setVideo(null);
+    }
+
+    public Path getVideoIdPath(){
+        return Path.of(id.toString());
+    }
+
+    public Path getMasterFilePath(){
+        return getVideoIdPath().resolve("master.m3u8");
     }
 }

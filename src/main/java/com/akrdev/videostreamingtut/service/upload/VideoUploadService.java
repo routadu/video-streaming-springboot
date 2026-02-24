@@ -6,5 +6,5 @@ import com.akrdev.videostreamingtut.exception.VideoUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoUploadService {
-    VideoDto uploadVideo(VideoUploadRequest videoRequest, MultipartFile file, Long ownerId) throws VideoUploadException;
+    VideoDto uploadVideo(VideoUploadRequest videoRequest, MultipartFile file, MultipartFile thumbnail, Long ownerId) throws VideoUploadException;
 }
