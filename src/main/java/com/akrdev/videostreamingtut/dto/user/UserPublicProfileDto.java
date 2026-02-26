@@ -1,18 +1,20 @@
 package com.akrdev.videostreamingtut.dto.user;
 
-import jakarta.validation.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
-    @NotEmpty
+public class UserPublicProfileDto {
     private String username;
-    @NotEmpty
-    private String password;
+    private String firstName;
+    private String lastName;
+    private LocalDateTime createdDate;
 }

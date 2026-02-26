@@ -3,7 +3,9 @@ package com.akrdev.videostreamingtut.entity.user;
 import com.akrdev.videostreamingtut.entity.video.Video;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,8 +17,7 @@ import java.util.List;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String username;
 
     @Column(nullable = false)
     private String firstName;
@@ -31,6 +32,10 @@ public class User {
 
     @Column(nullable = false, columnDefinition = "varchar(30) default 'ROLE_USER'")
     private String role;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdDate;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)

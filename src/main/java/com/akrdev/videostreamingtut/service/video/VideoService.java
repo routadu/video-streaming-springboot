@@ -16,6 +16,7 @@ public interface VideoService {
     VideoDto findDtoByIdOrThrow(UUID videoId) throws VideoNotFoundException;
     VideoListDto findAllVideos();
     VideoListDto findAllByQuery(String query);
+    VideoListDto findAllByUsername(String username);
     Resource getMasterFile(UUID videoId);
     Resource getThumbnailFile(UUID videoId);
 }

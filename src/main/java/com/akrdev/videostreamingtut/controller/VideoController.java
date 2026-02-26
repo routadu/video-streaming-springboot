@@ -52,7 +52,7 @@ public class VideoController {
                 videoUploadRequest,
                 file,
                 thumbnail,
-                userDetails.getId()
+                userDetails.getUsername()
         );
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -62,6 +62,11 @@ public class VideoController {
     @GetMapping
     public ResponseEntity<VideoListDto> getAllVideos(){
         return ResponseEntity.ok(videoService.findAllVideos());
+    }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity<VideoListDto> getVideosByUser(@PathVariable String username){
+        return ResponseEntity.ok(videoService.findAllByUsername(username));
     }
 
     @GetMapping("/search")

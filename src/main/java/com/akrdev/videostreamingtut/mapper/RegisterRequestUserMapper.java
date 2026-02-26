@@ -11,6 +11,7 @@ public class RegisterRequestUserMapper implements Function<RegisterRequest, User
     @Override
     public User apply(RegisterRequest registerRequest) {
         return User.builder()
+                .username(registerRequest.getUsername())
                 .firstName(registerRequest.getFirstName())
                 .lastName(registerRequest.getLastName())
                 .email(registerRequest.getEmail())

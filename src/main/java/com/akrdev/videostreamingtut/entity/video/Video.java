@@ -43,7 +43,7 @@ public class Video {
     private LocalDateTime lastUpdated;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_username")
     private User owner;
 
     @ToString.Exclude

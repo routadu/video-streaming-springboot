@@ -14,6 +14,8 @@ public interface VideoRepository extends JpaRepository<Video, UUID> {
 
     @Query("SELECT v FROM Video v WHERE LOWER(v.title) LIKE LOWER(CONCAT('%', :query, '%')) " +
             "OR LOWER(v.description) LIKE LOWER(CONCAT('%', :query, '%'))")
-    List<Video> findAllByQuery(@Param("query") String query);
+    List<Video> findByQuery(@Param("query") String query);
+
+    List<Video> findByOwnerUsername(String username);
 
 }

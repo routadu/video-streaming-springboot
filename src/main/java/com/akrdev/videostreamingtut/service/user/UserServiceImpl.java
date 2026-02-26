@@ -4,12 +4,14 @@ import com.akrdev.videostreamingtut.dto.jwt.JwtAuthenticationResponse;
 import com.akrdev.videostreamingtut.dto.user.LoginRequest;
 import com.akrdev.videostreamingtut.dto.user.RegisterRequest;
 import com.akrdev.videostreamingtut.dto.user.UserDto;
+import com.akrdev.videostreamingtut.dto.user.UserPublicProfileDto;
 import com.akrdev.videostreamingtut.entity.user.User;
 import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
 import com.akrdev.videostreamingtut.exception.UserAlreadyExistsException;
 import com.akrdev.videostreamingtut.exception.UserNotFoundException;
 import com.akrdev.videostreamingtut.mapper.RegisterRequestUserMapper;
 import com.akrdev.videostreamingtut.mapper.UserDtoMapper;
+import com.akrdev.videostreamingtut.mapper.UserPublicProfileDtoMapper;
 import com.akrdev.videostreamingtut.repository.UserRepository;
 import com.akrdev.videostreamingtut.security.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final RegisterRequestUserMapper requestToUserMapper;
     private final UserDtoMapper userDtoMapper;
+    private final UserPublicProfileDtoMapper  userPublicProfileDtoMapper;
     private final PasswordEncoder passwordEncoder;
 
     private AuthenticationManager authenticationManager;
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(User user) throws UserAlreadyExistsException {
-        Optional<User> existingUser = findByEmail(user.getEmail());
+        Optional<User> existingUser = findByUsernameOrEmail(user.getUsername(), user.getEmail());
         if(existingUser.isPresent()) {
             throw new UserAlreadyExistsException(user.getEmail());
         }
@@ -69,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public JwtAuthenticationResponse loginUser(LoginRequest request) {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
@@ -91,14 +93,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return repository.findById(id);
+    public Optional<User> findByUsername(String username) {
+        return repository.findById(username);
     }
 
     @Override
-    public User findByIdOrThrow(Long id) throws UserNotFoundException {
-        return findById(id)
-                .orElseThrow(() -> UserNotFoundException.id(id));
+    public User findByUsernameOrThrow(String username) throws UserNotFoundException {
+        return findByUsername(username)
+                .orElseThrow(() -> UserNotFoundException.id(username));
+    }
+
+    @Override
+    public UserDto findUserDtoByUsernameOrThrow(String username) throws UserNotFoundException {
+        return userDtoMapper.apply(findByUsernameOrThrow(username));
+    }
+
+    @Override
+    public UserPublicProfileDto findUserPublicProfileDtoByUsernameOrThrow(String username) throws UserNotFoundException {
+        return userPublicProfileDtoMapper.apply(findByUsernameOrThrow(username));
     }
 
     @Override
@@ -113,7 +125,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User loadUserByUsername(String email) {
-        return findByEmailOrThrow(email);
+    public Optional<User> findByUsernameOrEmail(String username, String email) {
+        return repository.findByUsernameOrEmail(username, email);
+    }
+
+    @Override
+    public User findByUsernameOrEmailOrThrow(String username, String email) {
+        return findByUsernameOrEmail(username, email)
+                .orElseThrow(() -> UserNotFoundException.usernameOrEmail(username, email));
     }
 }

@@ -89,10 +89,10 @@ public class LocalStorageVideoUploadServiceImpl implements VideoUploadService {
 
     }
 
-    public VideoDto uploadVideo(VideoUploadRequest videoRequest, MultipartFile file, MultipartFile thumbnail, Long ownerId) {
+    public VideoDto uploadVideo(VideoUploadRequest videoRequest, MultipartFile file, MultipartFile thumbnail, String username) {
 
         try{
-            User user = userService.findByIdOrThrow(ownerId);
+            User user = userService.findByUsernameOrThrow(username);
 
             //Saving video to get UUID
             Video video = Video.builder()

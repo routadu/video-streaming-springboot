@@ -43,7 +43,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfig))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/{username}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/videos/user/{username}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos/{videoId}/thumbnail").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos/{videoId}/master.m3u8").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos/{videoId}/{resolution}/{fileName}").permitAll()

@@ -194,8 +194,7 @@ public class FFmpegVideoProcessingServiceImpl implements VideoProcessingService 
         int noOfTries = 0;
 
         Path inputPath = uploadedVideo.getVideoPath();
-        Path baseOutputDir = Paths.get(defaultLocalHlsDirectory)
-                .resolve(uploadedVideo.getVideoBasePath());
+        Path baseOutputDir = Paths.get(defaultLocalHlsDirectory).resolve(uploadedVideo.getVideoBasePath());
         Path resOutputDir = baseOutputDir.resolve(resolution.getName());
         Path outputPath = resOutputDir.resolve("index.m3u8");
 

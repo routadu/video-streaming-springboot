@@ -67,7 +67,18 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoListDto findAllByQuery(String query) {
-        List<VideoDto> dtoList = videoRepository.findAllByQuery(query)
+        List<VideoDto> dtoList = videoRepository.findByQuery(query)
+                .stream()
+                .map(videoDtoMapper)
+                .toList();
+        return VideoListDto.builder()
+                .videos(dtoList)
+                .build();
+    }
+
+    @Override
+    public VideoListDto findAllByUsername(String username) {
+        List<VideoDto> dtoList = videoRepository.findByOwnerUsername(username)
                 .stream()
                 .map(videoDtoMapper)
                 .toList();

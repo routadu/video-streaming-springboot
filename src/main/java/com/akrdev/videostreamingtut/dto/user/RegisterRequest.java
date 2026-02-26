@@ -15,6 +15,11 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterRequest {
+
+    @NotBlank
+    @Length(min = 3, max = 20)
+    private String username;
+
     @NotBlank
     @Length(min = 3, max = 50)
     private String firstName;
