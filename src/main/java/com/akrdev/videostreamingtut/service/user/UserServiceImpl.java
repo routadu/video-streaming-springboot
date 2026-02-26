@@ -1,8 +1,8 @@
 package com.akrdev.videostreamingtut.service.user;
 
 import com.akrdev.videostreamingtut.dto.jwt.JwtAuthenticationResponse;
-import com.akrdev.videostreamingtut.dto.user.LoginRequest;
-import com.akrdev.videostreamingtut.dto.user.RegisterRequest;
+import com.akrdev.videostreamingtut.dto.auth.LoginRequest;
+import com.akrdev.videostreamingtut.dto.auth.RegisterRequest;
 import com.akrdev.videostreamingtut.dto.user.UserDto;
 import com.akrdev.videostreamingtut.dto.user.UserPublicProfileDto;
 import com.akrdev.videostreamingtut.entity.user.User;

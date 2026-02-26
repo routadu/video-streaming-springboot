@@ -1,6 +1,6 @@
 package com.akrdev.videostreamingtut.mapper;
 
-import com.akrdev.videostreamingtut.dto.user.RegisterRequest;
+import com.akrdev.videostreamingtut.dto.auth.RegisterRequest;
 import com.akrdev.videostreamingtut.entity.user.User;
 import org.springframework.stereotype.Service;
 

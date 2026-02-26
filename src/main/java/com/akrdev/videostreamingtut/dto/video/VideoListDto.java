@@ -1,16 +1,13 @@
 package com.akrdev.videostreamingtut.dto.video;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class VideoListDto {
     private List<VideoDto> videos;
 }

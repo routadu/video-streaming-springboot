@@ -1,19 +1,12 @@
-package com.akrdev.videostreamingtut.dto.user;
+package com.akrdev.videostreamingtut.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.Set;
-
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class RegisterRequest {
 
     @NotBlank
