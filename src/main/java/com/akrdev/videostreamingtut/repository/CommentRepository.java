@@ -14,8 +14,4 @@ public interface CommentRepository extends JpaRepository<Comment, UUID> {
     Page<Comment> findByVideoIdAndParentCommentIsNull(UUID videoId, Pageable pageable);
 
     Page<Comment> findByParentCommentId(UUID parentCommentId, Pageable pageable);
-
-    long countByVideoId(UUID videoId);
-
-    long countByParentCommentId(UUID parentId);
 }

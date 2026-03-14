@@ -7,7 +7,6 @@ import com.akrdev.videostreamingtut.dto.video.VideoListDto;
 import com.akrdev.videostreamingtut.dto.video.VideoUploadRequest;
 import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
 import com.akrdev.videostreamingtut.service.comment.CommentService;
-import com.akrdev.videostreamingtut.service.user.UserService;
 import com.akrdev.videostreamingtut.service.video.VideoService;
 import com.akrdev.videostreamingtut.service.upload.VideoUploadService;
 import com.akrdev.videostreamingtut.service.videofile.VideoFileService;
@@ -18,14 +17,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -146,11 +141,12 @@ public class VideoController {
 
     @PostMapping("/{videoId}/comments")
     public ResponseEntity<CommentResponseDto> createComment(
+            @PathVariable UUID videoId,
             @RequestBody @Validated CommentRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        String username = userDetails.getUsername();
-        requestDto.setAuthorUsername(username);
+        requestDto.setVideoId(videoId);
+        requestDto.setAuthorUsername(userDetails.getUsername());
         CommentResponseDto createdComment = commentService.createComment(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(createdComment);
@@ -164,9 +160,5 @@ public class VideoController {
         Page<CommentResponseDto> comments = commentService.getTopLevelComments(videoId, pageable);
         return ResponseEntity.ok(comments);
     }
-
-
-
-
 
 }

@@ -1,6 +1,5 @@
 package com.akrdev.videostreamingtut.controller;
 
-import com.akrdev.videostreamingtut.dto.user.UserDto;
 import com.akrdev.videostreamingtut.dto.user.UserPublicProfileDto;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import lombok.RequiredArgsConstructor;

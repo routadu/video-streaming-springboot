@@ -1,7 +1,6 @@
 package com.akrdev.videostreamingtut.dto.comment;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +17,6 @@ public class CommentRequestDto {
 
     private String authorUsername;
 
-    @NotNull
     private UUID videoId;
 
     private UUID parentId;

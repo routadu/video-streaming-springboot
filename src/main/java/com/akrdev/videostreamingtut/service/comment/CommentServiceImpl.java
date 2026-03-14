@@ -13,19 +13,22 @@ import com.akrdev.videostreamingtut.repository.CommentRepository;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import com.akrdev.videostreamingtut.service.video.VideoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
@@ -47,7 +50,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
     public CommentResponseDto createComment(CommentRequestDto requestDto) {
         User author = userService.findByUsernameOrThrow(requestDto.getAuthorUsername());
         Video video = videoService.findByIdOrThrow(requestDto.getVideoId());
@@ -69,14 +71,21 @@ public class CommentServiceImpl implements CommentService {
             parent.incrementReplyCount();
         }
 
-        commentRepository.save(comment);
+        Comment savedComment = commentRepository.save(comment);
+        UUID parentCommentId = null;
+
+        if(savedComment.getParentComment() != null) {
+            parentCommentId = savedComment.getParentComment().getId();
+        }
 
         return CommentResponseDto.builder()
-                .id(comment.getId())
-                .text(comment.getText())
-                .authorUsername(comment.getAuthor().getUsername())
-                .createdAt(comment.getCreatedAt())
-                .updatedAt(comment.getUpdatedAt())
+                .id(savedComment.getId())
+                .parentId(parentCommentId)
+                .videoId(video.getId())
+                .text(savedComment.getText())
+                .authorUsername(savedComment.getAuthor().getUsername())
+                .createdAt(savedComment.getCreatedAt())
+                .updatedAt(savedComment.getUpdatedAt())
                 .build();
     }
 
@@ -118,6 +127,18 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional(readOnly = true)
     public Page<CommentResponseDto> getTopLevelComments(UUID videoId, Pageable pageable) {
+        if(pageable == null) {
+            pageable = PageRequest.of(
+                    0,
+                    10,
+                    Sort.by("updatedAt").descending());
+        } else if (pageable.getSort().isEmpty()) {
+            pageable = PageRequest.of(
+                    pageable.getPageNumber(),
+                    pageable.getPageSize(),
+                    Sort.by("updatedAt").descending()
+            );
+        }
         Page<Comment> comments = commentRepository.findByVideoIdAndParentCommentIsNull(videoId, pageable);
         return comments.map(commentResponseDtoMapper);
     }
