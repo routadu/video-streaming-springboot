@@ -14,5 +14,6 @@ public class VideoUploadRequest {
     @Length(min = 5, max = 200)
     private String title;
     private String description;
+    @Builder.Default
     private String contentType = "application/octet-stream";
 }

@@ -39,6 +39,7 @@ public class Comment {
     private Comment parentComment;
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Comment> replies = new ArrayList<>();
 
     @CreationTimestamp
@@ -48,6 +49,7 @@ public class Comment {
     private LocalDateTime updatedAt;
 
     @Column(nullable = false)
+    @Builder.Default
     private int replyCount = 0;
 
     public void incrementReplyCount() {
