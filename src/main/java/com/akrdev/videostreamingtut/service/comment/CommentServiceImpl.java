@@ -152,17 +152,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(UUID commentId, String requestingUsername) {
         Comment comment = findCommentByIdOrThrow(commentId);
-
-        if(comment.getAuthor().getUsername().equals(requestingUsername)) {
+        if(!comment.getAuthor().getUsername().equals(requestingUsername)) {
             throw new CustomAccessDeniedException("You do not have permission to delete this comment");
         }
-
         Comment parentComment = comment.getParentComment();
-
         if(parentComment != null) {
             parentComment.decrementReplyCount();
         }
-
         commentRepository.delete(comment);
     }
 }
