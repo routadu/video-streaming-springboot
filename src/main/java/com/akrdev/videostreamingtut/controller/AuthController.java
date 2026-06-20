@@ -2,8 +2,8 @@ package com.akrdev.videostreamingtut.controller;
 
 
 import com.akrdev.videostreamingtut.dto.jwt.JwtAuthenticationResponse;
-import com.akrdev.videostreamingtut.dto.user.LoginRequest;
-import com.akrdev.videostreamingtut.dto.user.RegisterRequest;
+import com.akrdev.videostreamingtut.dto.auth.LoginRequest;
+import com.akrdev.videostreamingtut.dto.auth.RegisterRequest;
 import com.akrdev.videostreamingtut.dto.user.UserDto;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")

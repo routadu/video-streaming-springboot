@@ -1,38 +1,40 @@
 package com.akrdev.videostreamingtut.controller;
 
+import com.akrdev.videostreamingtut.dto.comment.CommentRequestDto;
+import com.akrdev.videostreamingtut.dto.comment.CommentResponseDto;
 import com.akrdev.videostreamingtut.dto.video.VideoDto;
 import com.akrdev.videostreamingtut.dto.video.VideoListDto;
 import com.akrdev.videostreamingtut.dto.video.VideoUploadRequest;
 import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
+import com.akrdev.videostreamingtut.service.comment.CommentService;
 import com.akrdev.videostreamingtut.service.video.VideoService;
 import com.akrdev.videostreamingtut.service.upload.VideoUploadService;
 import com.akrdev.videostreamingtut.service.videofile.VideoFileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/v1/videos")
-@CrossOrigin("*")
 @RequiredArgsConstructor
 @Slf4j
 public class VideoController {
 
-    private final VideoService  videoService;
+    private final VideoService videoService;
     private final VideoFileService  videoFileService;
     private final VideoUploadService videoUploadService;
+    private final CommentService commentService;
 
     @PostMapping
     public ResponseEntity<VideoDto> uploadVideo(
@@ -124,8 +126,6 @@ public class VideoController {
             contentType = "application/octet-stream"; // Fallback
         }
 
-        // Playlists (.m3u8) shouldn't be heavily cached during live streams, but for VOD it's okay.
-        // Segments (.ts) can be cached forever because they never change.
         HttpHeaders headers = new HttpHeaders();
         if (fileName.endsWith(".ts")) {
             headers.setCacheControl("public, max-age=31536000");
@@ -138,4 +138,27 @@ public class VideoController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(resource);
     }
+
+    @PostMapping("/{videoId}/comments")
+    public ResponseEntity<CommentResponseDto> createComment(
+            @PathVariable UUID videoId,
+            @RequestBody @Validated CommentRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        requestDto.setVideoId(videoId);
+        requestDto.setAuthorUsername(userDetails.getUsername());
+        CommentResponseDto createdComment = commentService.createComment(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(createdComment);
+    }
+
+    @GetMapping("/{videoId}/comments")
+    public ResponseEntity<Page<CommentResponseDto>> getTopLevelComments(
+            @PathVariable UUID videoId,
+            Pageable pageable
+    ) {
+        Page<CommentResponseDto> comments = commentService.getTopLevelComments(videoId, pageable);
+        return ResponseEntity.ok(comments);
+    }
+
 }

@@ -42,23 +42,13 @@ public class Video {
     @UpdateTimestamp
     private LocalDateTime lastUpdated;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_username")
     private User owner;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VideoFile> videos;
-
-    public void addVideoFile(VideoFile file) {
-        videos.add(file);
-        file.setVideo(this);
-    }
-
-    public void removeVideoFile(VideoFile file) {
-        videos.remove(file);
-        file.setVideo(null);
-    }
 
     public Path getVideoIdPath(){
         return Path.of(id.toString());

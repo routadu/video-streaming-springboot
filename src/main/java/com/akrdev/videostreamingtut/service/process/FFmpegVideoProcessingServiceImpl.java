@@ -19,7 +19,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -83,14 +82,14 @@ public class FFmpegVideoProcessingServiceImpl implements VideoProcessingService 
 
             ProcessBuilder processBuilder = new ProcessBuilder(
                     "ffmpeg",
-                    "-ss", "00:00:02",                  // FAST seek (placed before -i)
-                    "-i", videoFullPath.toString(), // Input file
-                    "-frames:v", "1",                   // Extract exactly 1 video frame
-                    "-c:v", "mjpeg",                    // Force the JPEG encoder
-                    "-pix_fmt", "yuvj420p",             // CRITICAL: Force standard JPEG color space
-                    "-q:v", "2",                        // High quality
-                    "-y",                               // Overwrite if exists
-                    thumbnailFullPath.toString()            // Output file
+                    "-ss", "00:00:02",
+                    "-i", videoFullPath.toString(),
+                    "-frames:v", "1",
+                    "-c:v", "mjpeg",
+                    "-pix_fmt", "yuvj420p",
+                    "-q:v", "2",
+                    "-y",
+                    thumbnailFullPath.toString()
             );
 
             processBuilder.redirectErrorStream(true);
@@ -223,7 +222,7 @@ public class FFmpegVideoProcessingServiceImpl implements VideoProcessingService 
                         "-c:v", "libx264",
                         "-b:v", resolution.getBitrate(),
                         "-maxrate", resolution.getBitrate(),
-                        "-bufsize", resolution.getBitrate(), // usually 2x maxrate, keeping simple
+                        "-bufsize", resolution.getBitrate(),
                         "-c:a", "aac",
                         "-b:a", "128k",
                         "-hls_time", "10",

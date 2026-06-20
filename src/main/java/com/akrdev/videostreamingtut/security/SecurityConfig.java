@@ -1,12 +1,10 @@
 package com.akrdev.videostreamingtut.security;
 
-import com.akrdev.videostreamingtut.cors.CorsConfig;
 import com.akrdev.videostreamingtut.security.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -45,10 +43,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/{username}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/videos/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos/user/{username}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/videos/{videoId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos/{videoId}/thumbnail").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos/{videoId}/master.m3u8").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/videos/{videoId}/{resolution}/{fileName}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/videos/{videoId}/comments").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/comments/{commentId}/replies").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
