@@ -1,8 +1,8 @@
-package com.akrdev.videostreamingtut.exception;
+package com.akrdev.videostreamingtut.exception.comment;
 
 import java.util.UUID;
 
-public class CommentNotFoundException extends RuntimeException {
+public class CommentNotFoundException extends CommentException {
     public CommentNotFoundException(String message) {
         super(message);
     }

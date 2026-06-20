@@ -1,8 +1,8 @@
-package com.akrdev.videostreamingtut.exception;
+package com.akrdev.videostreamingtut.exception.video;
 
 import java.util.UUID;
 
-public class VideoFileNotFoundException extends RuntimeException {
+public class VideoFileNotFoundException extends VideoException {
     public VideoFileNotFoundException(UUID videoId) {
         super("No video file with id " + videoId + " found");
     }

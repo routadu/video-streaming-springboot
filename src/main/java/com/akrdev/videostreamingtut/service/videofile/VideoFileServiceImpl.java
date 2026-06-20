@@ -3,7 +3,7 @@ package com.akrdev.videostreamingtut.service.videofile;
 import com.akrdev.videostreamingtut.entity.video.videofile.VideoFile;
 import com.akrdev.videostreamingtut.entity.video.videofile.processingstatus.ProcessingStatus;
 import com.akrdev.videostreamingtut.exception.CustomAccessDeniedException;
-import com.akrdev.videostreamingtut.exception.VideoFileNotFoundException;
+import com.akrdev.videostreamingtut.exception.video.VideoFileNotFoundException;
 import com.akrdev.videostreamingtut.repository.VideoFileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

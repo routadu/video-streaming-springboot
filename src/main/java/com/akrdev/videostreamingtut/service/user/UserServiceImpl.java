@@ -3,7 +3,7 @@ package com.akrdev.videostreamingtut.service.user;
 import com.akrdev.videostreamingtut.dto.user.UserDto;
 import com.akrdev.videostreamingtut.dto.user.UserPublicProfileDto;
 import com.akrdev.videostreamingtut.entity.user.User;
-import com.akrdev.videostreamingtut.exception.UserNotFoundException;
+import com.akrdev.videostreamingtut.exception.user.UserNotFoundException;
 import com.akrdev.videostreamingtut.mapper.UserDtoMapper;
 import com.akrdev.videostreamingtut.mapper.UserPublicProfileDtoMapper;
 import com.akrdev.videostreamingtut.repository.UserRepository;

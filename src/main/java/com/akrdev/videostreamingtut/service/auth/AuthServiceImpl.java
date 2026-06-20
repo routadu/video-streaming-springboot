@@ -6,7 +6,7 @@ import com.akrdev.videostreamingtut.dto.jwt.JwtAuthenticationResponse;
 import com.akrdev.videostreamingtut.dto.user.UserDto;
 import com.akrdev.videostreamingtut.entity.user.User;
 import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
-import com.akrdev.videostreamingtut.exception.UserAlreadyExistsException;
+import com.akrdev.videostreamingtut.exception.user.UserAlreadyExistsException;
 import com.akrdev.videostreamingtut.mapper.RegisterRequestUserMapper;
 import com.akrdev.videostreamingtut.mapper.UserDtoMapper;
 import com.akrdev.videostreamingtut.security.jwt.JwtUtils;

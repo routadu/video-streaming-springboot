@@ -1,6 +1,6 @@
-package com.akrdev.videostreamingtut.exception;
+package com.akrdev.videostreamingtut.exception.comment;
 
-public class DoubleNestedCommentException extends RuntimeException {
+public class DoubleNestedCommentException extends CommentException {
     public DoubleNestedCommentException(String message) {
         super(message);
     }

@@ -3,7 +3,7 @@ package com.akrdev.videostreamingtut.service.video;
 import com.akrdev.videostreamingtut.dto.video.VideoDto;
 import com.akrdev.videostreamingtut.dto.video.VideoListDto;
 import com.akrdev.videostreamingtut.entity.video.Video;
-import com.akrdev.videostreamingtut.exception.VideoNotFoundException;
+import com.akrdev.videostreamingtut.exception.video.VideoNotFoundException;
 import org.springframework.core.io.Resource;
 
 import java.util.Optional;

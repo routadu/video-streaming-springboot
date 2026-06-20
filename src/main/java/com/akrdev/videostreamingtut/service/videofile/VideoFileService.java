@@ -2,7 +2,7 @@ package com.akrdev.videostreamingtut.service.videofile;
 
 import com.akrdev.videostreamingtut.entity.video.videofile.VideoFile;
 import com.akrdev.videostreamingtut.entity.video.videofile.processingstatus.ProcessingStatus;
-import com.akrdev.videostreamingtut.exception.VideoFileNotFoundException;
+import com.akrdev.videostreamingtut.exception.video.VideoFileNotFoundException;
 import org.springframework.core.io.Resource;
 
 import java.util.Optional;

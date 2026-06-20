@@ -1,10 +1,8 @@
-package com.akrdev.videostreamingtut.exception;
-
-import com.akrdev.videostreamingtut.entity.video.videofile.VideoFile;
+package com.akrdev.videostreamingtut.exception.video;
 
 import java.util.UUID;
 
-public class VideoFileNotAccessibleException extends RuntimeException {
+public class VideoFileNotAccessibleException extends VideoException {
 
     public VideoFileNotAccessibleException(UUID videoId, int resolution) {
         String message = String.format(
