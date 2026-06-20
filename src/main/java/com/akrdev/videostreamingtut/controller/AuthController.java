@@ -5,6 +5,7 @@ import com.akrdev.videostreamingtut.dto.jwt.JwtAuthenticationResponse;
 import com.akrdev.videostreamingtut.dto.auth.LoginRequest;
 import com.akrdev.videostreamingtut.dto.auth.RegisterRequest;
 import com.akrdev.videostreamingtut.dto.user.UserDto;
+import com.akrdev.videostreamingtut.service.auth.AuthService;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,18 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Validated RegisterRequest request){
-        UserDto dto = userService.registerUser(request);
+        UserDto dto = authService.registerUser(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(dto);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Validated LoginRequest request){
-        JwtAuthenticationResponse response = userService.loginUser(request);
+        JwtAuthenticationResponse response = authService.loginUser(request);
         return ResponseEntity.ok(response);
     }
 }
