@@ -1,11 +1,11 @@
 package com.akrdev.videostreamingtut.service.video;
 
-import com.akrdev.videostreamingtut.dto.video.VideoListDto;
-import com.akrdev.videostreamingtut.dto.video.VideoDto;
-import com.akrdev.videostreamingtut.entity.video.Video;
+import com.akrdev.videostreamingtut.data.dto.video.VideoListDto;
+import com.akrdev.videostreamingtut.data.dto.video.VideoDto;
+import com.akrdev.videostreamingtut.data.entity.video.Video;
 import com.akrdev.videostreamingtut.exception.video.VideoNotFoundException;
-import com.akrdev.videostreamingtut.mapper.VideoDtoMapper;
-import com.akrdev.videostreamingtut.mapper.VideoDtoMapperWithResolution;
+import com.akrdev.videostreamingtut.data.mapper.VideoDtoMapper;
+import com.akrdev.videostreamingtut.data.mapper.VideoDtoMapperWithResolution;
 import com.akrdev.videostreamingtut.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

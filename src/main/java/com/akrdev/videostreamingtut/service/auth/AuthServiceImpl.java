@@ -1,15 +1,15 @@
 package com.akrdev.videostreamingtut.service.auth;
 
-import com.akrdev.videostreamingtut.dto.auth.LoginRequest;
-import com.akrdev.videostreamingtut.dto.auth.RegisterRequest;
-import com.akrdev.videostreamingtut.dto.jwt.JwtAuthenticationResponse;
-import com.akrdev.videostreamingtut.dto.user.UserDto;
-import com.akrdev.videostreamingtut.entity.user.User;
-import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
+import com.akrdev.videostreamingtut.data.dto.auth.LoginRequest;
+import com.akrdev.videostreamingtut.data.dto.auth.RegisterRequest;
+import com.akrdev.videostreamingtut.data.dto.jwt.JwtAuthenticationResponse;
+import com.akrdev.videostreamingtut.data.dto.user.UserDto;
+import com.akrdev.videostreamingtut.data.entity.user.User;
+import com.akrdev.videostreamingtut.data.entity.user.UserDetailsImpl;
 import com.akrdev.videostreamingtut.exception.user.UserAlreadyExistsException;
-import com.akrdev.videostreamingtut.mapper.RegisterRequestUserMapper;
-import com.akrdev.videostreamingtut.mapper.UserDtoMapper;
-import com.akrdev.videostreamingtut.security.jwt.JwtUtils;
+import com.akrdev.videostreamingtut.data.mapper.RegisterRequestUserMapper;
+import com.akrdev.videostreamingtut.data.mapper.UserDtoMapper;
+import com.akrdev.videostreamingtut.config.security.jwt.JwtUtils;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

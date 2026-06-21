@@ -1,7 +1,6 @@
 package com.akrdev.videostreamingtut.controller;
 
-import com.akrdev.videostreamingtut.dto.error.ErrorResponseDto;
-import com.akrdev.videostreamingtut.exception.comment.*;
+import com.akrdev.videostreamingtut.data.dto.error.ErrorResponseDto;
 import com.akrdev.videostreamingtut.exception.user.*;
 import com.akrdev.videostreamingtut.exception.video.*;
 import com.akrdev.videostreamingtut.exception.CustomAccessDeniedException;

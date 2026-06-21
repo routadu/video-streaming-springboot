@@ -1,9 +1,9 @@
 package com.akrdev.videostreamingtut.service.analytics;
 
-import com.akrdev.videostreamingtut.dto.video.ContinueWatchingDto;
-import com.akrdev.videostreamingtut.dto.video.ContinueWatchingUpdateRequest;
-import com.akrdev.videostreamingtut.entity.video.Video;
-import com.akrdev.videostreamingtut.entity.video.continuewatching.ContinueWatching;
+import com.akrdev.videostreamingtut.data.dto.video.ContinueWatchingDto;
+import com.akrdev.videostreamingtut.data.dto.video.ContinueWatchingUpdateRequest;
+import com.akrdev.videostreamingtut.data.entity.video.Video;
+import com.akrdev.videostreamingtut.data.entity.video.continuewatching.ContinueWatching;
 import com.akrdev.videostreamingtut.repository.ContinueWatchingRepository;
 import com.akrdev.videostreamingtut.service.video.VideoService;
 import lombok.RequiredArgsConstructor;

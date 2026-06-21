@@ -1,12 +1,11 @@
 package com.akrdev.videostreamingtut.controller;
 
 
-import com.akrdev.videostreamingtut.dto.jwt.JwtAuthenticationResponse;
-import com.akrdev.videostreamingtut.dto.auth.LoginRequest;
-import com.akrdev.videostreamingtut.dto.auth.RegisterRequest;
-import com.akrdev.videostreamingtut.dto.user.UserDto;
+import com.akrdev.videostreamingtut.data.dto.jwt.JwtAuthenticationResponse;
+import com.akrdev.videostreamingtut.data.dto.auth.LoginRequest;
+import com.akrdev.videostreamingtut.data.dto.auth.RegisterRequest;
+import com.akrdev.videostreamingtut.data.dto.user.UserDto;
 import com.akrdev.videostreamingtut.service.auth.AuthService;
-import com.akrdev.videostreamingtut.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

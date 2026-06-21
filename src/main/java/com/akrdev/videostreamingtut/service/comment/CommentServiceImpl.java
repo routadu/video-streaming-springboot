@@ -1,14 +1,14 @@
 package com.akrdev.videostreamingtut.service.comment;
 
-import com.akrdev.videostreamingtut.dto.comment.CommentRequestDto;
-import com.akrdev.videostreamingtut.dto.comment.CommentResponseDto;
-import com.akrdev.videostreamingtut.entity.comments.Comment;
-import com.akrdev.videostreamingtut.entity.user.User;
-import com.akrdev.videostreamingtut.entity.video.Video;
+import com.akrdev.videostreamingtut.data.dto.comment.CommentRequestDto;
+import com.akrdev.videostreamingtut.data.dto.comment.CommentResponseDto;
+import com.akrdev.videostreamingtut.data.entity.comments.Comment;
+import com.akrdev.videostreamingtut.data.entity.user.User;
+import com.akrdev.videostreamingtut.data.entity.video.Video;
 import com.akrdev.videostreamingtut.exception.comment.CommentNotFoundException;
 import com.akrdev.videostreamingtut.exception.CustomAccessDeniedException;
 import com.akrdev.videostreamingtut.exception.comment.DoubleNestedCommentException;
-import com.akrdev.videostreamingtut.mapper.CommentResponseDtoMapper;
+import com.akrdev.videostreamingtut.data.mapper.CommentResponseDtoMapper;
 import com.akrdev.videostreamingtut.repository.CommentRepository;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import com.akrdev.videostreamingtut.service.video.VideoService;

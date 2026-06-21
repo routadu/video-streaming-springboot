@@ -1,7 +1,7 @@
 package com.akrdev.videostreamingtut.service.upload;
 
-import com.akrdev.videostreamingtut.dto.video.VideoUploadRequest;
-import com.akrdev.videostreamingtut.dto.video.VideoDto;
+import com.akrdev.videostreamingtut.data.dto.video.VideoUploadRequest;
+import com.akrdev.videostreamingtut.data.dto.video.VideoDto;
 import com.akrdev.videostreamingtut.exception.video.VideoUploadException;
 import org.springframework.web.multipart.MultipartFile;
 

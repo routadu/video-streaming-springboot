@@ -1,6 +1,6 @@
 package com.akrdev.videostreamingtut.controller;
 
-import com.akrdev.videostreamingtut.dto.user.UserPublicProfileDto;
+import com.akrdev.videostreamingtut.data.dto.user.UserPublicProfileDto;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
