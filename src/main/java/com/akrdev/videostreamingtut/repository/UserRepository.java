@@ -1,6 +1,6 @@
 package com.akrdev.videostreamingtut.repository;
 
-import com.akrdev.videostreamingtut.entity.user.User;
+import com.akrdev.videostreamingtut.data.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

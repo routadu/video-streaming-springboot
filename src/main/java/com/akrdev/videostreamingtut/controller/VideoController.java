@@ -1,11 +1,11 @@
 package com.akrdev.videostreamingtut.controller;
 
-import com.akrdev.videostreamingtut.dto.comment.CommentRequestDto;
-import com.akrdev.videostreamingtut.dto.comment.CommentResponseDto;
-import com.akrdev.videostreamingtut.dto.video.VideoDto;
-import com.akrdev.videostreamingtut.dto.video.VideoListDto;
-import com.akrdev.videostreamingtut.dto.video.VideoUploadRequest;
-import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
+import com.akrdev.videostreamingtut.data.dto.comment.CommentRequestDto;
+import com.akrdev.videostreamingtut.data.dto.comment.CommentResponseDto;
+import com.akrdev.videostreamingtut.data.dto.video.VideoDto;
+import com.akrdev.videostreamingtut.data.dto.video.VideoListDto;
+import com.akrdev.videostreamingtut.data.dto.video.VideoUploadRequest;
+import com.akrdev.videostreamingtut.data.entity.user.UserDetailsImpl;
 import com.akrdev.videostreamingtut.service.comment.CommentService;
 import com.akrdev.videostreamingtut.service.video.VideoService;
 import com.akrdev.videostreamingtut.service.upload.VideoUploadService;

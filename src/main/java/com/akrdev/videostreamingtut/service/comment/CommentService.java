@@ -1,9 +1,9 @@
 package com.akrdev.videostreamingtut.service.comment;
 
-import com.akrdev.videostreamingtut.dto.comment.CommentRequestDto;
-import com.akrdev.videostreamingtut.dto.comment.CommentResponseDto;
-import com.akrdev.videostreamingtut.entity.comments.Comment;
-import com.akrdev.videostreamingtut.exception.CommentNotFoundException;
+import com.akrdev.videostreamingtut.data.dto.comment.CommentRequestDto;
+import com.akrdev.videostreamingtut.data.dto.comment.CommentResponseDto;
+import com.akrdev.videostreamingtut.data.entity.comments.Comment;
+import com.akrdev.videostreamingtut.exception.comment.CommentNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,10 +1,10 @@
 package com.akrdev.videostreamingtut.service.process;
 
-import com.akrdev.videostreamingtut.dto.video.UploadedVideoDto;
-import com.akrdev.videostreamingtut.entity.video.Video;
-import com.akrdev.videostreamingtut.entity.video.resolution.VideoResolution;
-import com.akrdev.videostreamingtut.entity.video.videofile.VideoFile;
-import com.akrdev.videostreamingtut.entity.video.videofile.processingstatus.ProcessingStatus;
+import com.akrdev.videostreamingtut.data.dto.video.UploadedVideoDto;
+import com.akrdev.videostreamingtut.data.entity.video.Video;
+import com.akrdev.videostreamingtut.data.entity.video.resolution.VideoResolution;
+import com.akrdev.videostreamingtut.data.entity.video.videofile.VideoFile;
+import com.akrdev.videostreamingtut.data.entity.video.videofile.processingstatus.ProcessingStatus;
 import com.akrdev.videostreamingtut.service.video.VideoService;
 import com.akrdev.videostreamingtut.service.videofile.VideoFileService;
 import jakarta.annotation.PostConstruct;

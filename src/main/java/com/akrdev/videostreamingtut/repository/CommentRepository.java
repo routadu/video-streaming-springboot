@@ -1,6 +1,6 @@
 package com.akrdev.videostreamingtut.repository;
 
-import com.akrdev.videostreamingtut.entity.comments.Comment;
+import com.akrdev.videostreamingtut.data.entity.comments.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

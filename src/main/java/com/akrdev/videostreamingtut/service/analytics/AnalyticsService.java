@@ -1,7 +1,7 @@
 package com.akrdev.videostreamingtut.service.analytics;
 
-import com.akrdev.videostreamingtut.dto.video.ContinueWatchingDto;
-import com.akrdev.videostreamingtut.dto.video.ContinueWatchingUpdateRequest;
+import com.akrdev.videostreamingtut.data.dto.video.ContinueWatchingDto;
+import com.akrdev.videostreamingtut.data.dto.video.ContinueWatchingUpdateRequest;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package com.akrdev.videostreamingtut.controller;
 
-import com.akrdev.videostreamingtut.dto.comment.CommentResponseDto;
-import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
+import com.akrdev.videostreamingtut.data.dto.comment.CommentResponseDto;
+import com.akrdev.videostreamingtut.data.entity.user.UserDetailsImpl;
 import com.akrdev.videostreamingtut.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

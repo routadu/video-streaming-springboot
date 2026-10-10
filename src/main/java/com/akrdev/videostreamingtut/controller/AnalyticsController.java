@@ -1,8 +1,8 @@
 package com.akrdev.videostreamingtut.controller;
 
-import com.akrdev.videostreamingtut.dto.video.ContinueWatchingDto;
-import com.akrdev.videostreamingtut.dto.video.ContinueWatchingUpdateRequest;
-import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
+import com.akrdev.videostreamingtut.data.dto.video.ContinueWatchingDto;
+import com.akrdev.videostreamingtut.data.dto.video.ContinueWatchingUpdateRequest;
+import com.akrdev.videostreamingtut.data.entity.user.UserDetailsImpl;
 import com.akrdev.videostreamingtut.service.analytics.AnalyticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,11 +1,11 @@
 package com.akrdev.videostreamingtut.service.upload;
 
-import com.akrdev.videostreamingtut.dto.video.VideoUploadRequest;
-import com.akrdev.videostreamingtut.dto.video.VideoDto;
-import com.akrdev.videostreamingtut.dto.video.UploadedVideoDto;
-import com.akrdev.videostreamingtut.entity.user.User;
-import com.akrdev.videostreamingtut.entity.video.Video;
-import com.akrdev.videostreamingtut.exception.VideoUploadException;
+import com.akrdev.videostreamingtut.data.dto.video.VideoUploadRequest;
+import com.akrdev.videostreamingtut.data.dto.video.VideoDto;
+import com.akrdev.videostreamingtut.data.dto.video.UploadedVideoDto;
+import com.akrdev.videostreamingtut.data.entity.user.User;
+import com.akrdev.videostreamingtut.data.entity.video.Video;
+import com.akrdev.videostreamingtut.exception.video.VideoUploadException;
 import com.akrdev.videostreamingtut.service.process.VideoProcessingService;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import com.akrdev.videostreamingtut.service.video.VideoService;

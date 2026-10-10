@@ -1,7 +1,7 @@
 package com.akrdev.videostreamingtut.service.userdetails;
 
-import com.akrdev.videostreamingtut.entity.user.User;
-import com.akrdev.videostreamingtut.entity.user.UserDetailsImpl;
+import com.akrdev.videostreamingtut.data.entity.user.User;
+import com.akrdev.videostreamingtut.data.entity.user.UserDetailsImpl;
 import com.akrdev.videostreamingtut.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;

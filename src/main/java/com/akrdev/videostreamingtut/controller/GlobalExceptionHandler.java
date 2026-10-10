@@ -1,7 +1,9 @@
 package com.akrdev.videostreamingtut.controller;
 
-import com.akrdev.videostreamingtut.dto.error.ErrorResponseDto;
-import com.akrdev.videostreamingtut.exception.*;
+import com.akrdev.videostreamingtut.data.dto.error.ErrorResponseDto;
+import com.akrdev.videostreamingtut.exception.user.*;
+import com.akrdev.videostreamingtut.exception.video.*;
+import com.akrdev.videostreamingtut.exception.CustomAccessDeniedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

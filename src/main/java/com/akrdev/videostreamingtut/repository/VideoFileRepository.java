@@ -1,7 +1,7 @@
 package com.akrdev.videostreamingtut.repository;
 
-import com.akrdev.videostreamingtut.entity.video.videofile.VideoFile;
-import com.akrdev.videostreamingtut.entity.video.videofile.processingstatus.ProcessingStatus;
+import com.akrdev.videostreamingtut.data.entity.video.videofile.VideoFile;
+import com.akrdev.videostreamingtut.data.entity.video.videofile.processingstatus.ProcessingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
